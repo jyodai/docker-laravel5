@@ -26,6 +26,7 @@ services:
     volumes:
       - ${PROJECT_PATH}:/work
     working_dir: /work
+    tty: true
 
   db:
     build: ./docker/mysql
@@ -60,6 +61,7 @@ services:
     volumes:
       - ${PROJECT_PATH}:/work
     working_dir: /work
+    tty: true
 
   redis:
     image: redis:alpine
