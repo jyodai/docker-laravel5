@@ -18,13 +18,19 @@ RUN set -eux && \
     tzdata && \
   apk add --update --no-cache \
     icu-dev \
+    libpng-dev \
+    libjpeg-turbo \
+    libjpeg \
+    libjpeg-turbo-dev \
+    freetype-dev \
     libzip-dev && \
   cp /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
   echo ${TZ} > /etc/timezone && \
   pecl install xdebug && \
   apk del .build-dependencies && \
   docker-php-ext-install intl pdo_mysql mbstring zip bcmath && \
-  docker-php-ext-enable xdebug && \
+  docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ && \
+  docker-php-ext-install -j$(nproc) gd && \
   mkdir $PSYSH_DIR && wget $PHP_MANUAL_URL -P $PSYSH_DIR
 
 # Config
